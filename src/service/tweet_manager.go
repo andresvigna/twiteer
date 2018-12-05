@@ -1,11 +1,15 @@
 package service
 
-var Tweet string
+import (
+	"github.com/twiteer/src/domain"
+)
 
-func PublishTweet(t string) {
-	Tweet = t
+var Tweet *domain.Tweet
+
+func PublishTweet(tweet *domain.Tweet) {
+	Tweet = tweet
 }
 
-func GetTweet() string {
+func GetTweet() *domain.Tweet {
 	return Tweet
 }

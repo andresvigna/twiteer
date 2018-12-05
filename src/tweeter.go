@@ -2,10 +2,12 @@ package main
 
 import (
 	"github.com/abiosoft/ishell"
+	"github.com/twiteer/src/domain"
 	"github.com/twiteer/src/service"
 )
 
 func main() {
+	var tweet *domain.Tweet
 
 	shell := ishell.New()
 	shell.SetPrompt("Tweeter >> ")
@@ -18,9 +20,13 @@ func main() {
 
 			defer c.ShowPrompt(true)
 
-			c.Print("Write your tweet: ")
+			c.Print("Who are you: ")
 
-			tweet := c.ReadLine()
+			user := c.ReadLine()
+			c.Print("Write your msg: ")
+			text := c.ReadLine()
+
+			tweet = domain.NewTweet(user, text)
 
 			service.PublishTweet(tweet)
 
@@ -38,8 +44,9 @@ func main() {
 			defer c.ShowPrompt(true)
 
 			tweet := service.GetTweet()
-
-			c.Println(tweet)
+			if tweet != nil {
+				c.Println(*tweet)
+			}
 
 			return
 		},
